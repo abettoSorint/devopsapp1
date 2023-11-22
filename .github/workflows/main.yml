@@ -1,0 +1,18 @@
+name CI
+on:
+  push:
+    branches:[master]
+  pull_request:
+    branches:[master]
+  workflow_dispatch:
+jobs:
+  lint:
+    runs-on:ubuntu-latest
+    steps:
+      -name:Checkout the code
+       uses:actions/checkout@v2
+
+      -name: Run a one-line script
+       run: |
+         echo salut Arthur,
+         echo nooooon .... tropo bette....
