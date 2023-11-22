@@ -44,6 +44,8 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: "build/app/outputs/apk/debug/*.apk"
+          tag: v1.0.5
+          token: ${{ secrets.TOKEN }}
 
   # 5
   build:
