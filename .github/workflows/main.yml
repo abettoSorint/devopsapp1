@@ -39,7 +39,7 @@ jobs:
         run: flutter test
 
       - name: debug app
-      - run: flutter build apk --debug --split-per-abi
+        run: flutter build apk --debug --split-per-abi
 
   # 5
   build:
