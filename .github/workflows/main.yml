@@ -58,5 +58,5 @@ jobs:
       - run: flutter build apk --debug --split-per-abi
 
       - uses: ncipollo/release-action@v1
-         with:
-           artifacts: "build/app/outputs/apk/debug/*.apk"
+        with:
+          artifacts: "build/app/outputs/apk/debug/*.apk"
