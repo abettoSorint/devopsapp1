@@ -32,11 +32,21 @@ jobs:
           channel: 'stable'
       - run: flutter --version
 
+      - name: flutter pub get
+      - run: flutter pub get
+
       - name: Run Flutter Analyse
         run: flutter analyze
 
       - name: Run test app
         run: flutter test
+
+      - name: debug app
+      - run: flutter build apk --debug --split-per-abi
+
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "build/app/outputs/apk/debug/*.apk"
 
   # 5
   build:
