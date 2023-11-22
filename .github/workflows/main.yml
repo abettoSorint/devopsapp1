@@ -13,6 +13,21 @@ on:
 
 # 4
 jobs:
+  test:
+    # 6
+    runs-on: ubuntu-latest
+
+    # 7
+    steps:
+      # 8
+      - uses: actions/checkout@v3
+
+      - name: Run Flutter Analyse
+        run: flutter analyze
+
+      - name: Run test app
+        run: flutter test
+
   # 5
   build:
     # 6
