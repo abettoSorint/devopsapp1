@@ -32,9 +32,6 @@ jobs:
           channel: 'stable'
       - run: flutter --version
 
-      - name: flutter pub get
-      - run: flutter pub get
-
       - name: Run Flutter Analyse
         run: flutter analyze
 
