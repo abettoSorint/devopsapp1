@@ -1,16 +1,27 @@
-name: CI
+name: Android Release
+
+# 1
 on:
+  # 2
   push:
-    branches:[master]
+    branches: [ "master" ]
   pull_request:
-    branches:[master]
+    branches: [ "master" ]
+
+  # 3
   workflow_dispatch:
 
+# 4
 jobs:
+  # 5
   build:
+    # 6
     runs-on: ubuntu-latest
-    steps:
-      -uses: actions/checkout@v3
 
-      -name: Run a one-line script
-       run: echo salut Arthur
+    # 7
+    steps:
+      # 8
+      - uses: actions/checkout@v3
+
+      - name: Run a one-line script
+        run: echo "salut Arthur!"
