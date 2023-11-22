@@ -41,13 +41,6 @@ jobs:
       - name: Run test app
         run: flutter test
 
-      - name: debug app
-      - run: flutter build apk --debug --split-per-abi
-
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: "build/app/outputs/apk/debug/*.apk"
-
   # 5
   build:
     # 6
@@ -60,3 +53,10 @@ jobs:
 
       - name: Run a one-line script
         run: echo "salut Arthur!"
+
+      - name: debug app
+      - run: flutter build apk --debug --split-per-abi
+
+      - uses: ncipollo/release-action@v1
+         with:
+           artifacts: "build/app/outputs/apk/debug/*.apk"
