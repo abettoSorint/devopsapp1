@@ -38,6 +38,12 @@ jobs:
       - name: Run test app
         run: flutter test
 
+      - name: Flutter commit  
+        run: echo ${{ github.event.head_commit.message }}  
+
+      - name: Flutter commit  to setup file
+        run: setup.sh ${{ github.event.head_commit.message }}
+
       - name: debug app
         run: flutter build apk --debug --split-per-abi
       - name: Push APK to Releases
