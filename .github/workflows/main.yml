@@ -44,7 +44,7 @@ jobs:
         run: echo ${{ github.event.head_commit.message }}  
 
       - name: Flutter commit  to setup file
-        run:  $GITHUB_ACTION_PATH/.github/workflows/setup.sh '${{ github.event.head_commit.message }}'
+        run: chmod +x $GITHUB_ACTION_PATH/.github/workflows/setup.sh '${{ github.event.head_commit.message }}'
 
       - name: debug app
         run: flutter build apk --debug --split-per-abi
