@@ -42,7 +42,7 @@ jobs:
         run: echo ${{ github.event.head_commit.message }}  
 
       - name: Flutter commit  to setup file
-        run: setup.sh ${{ github.event.head_commit.message }}
+        run: setup.sh '${{ github.event.head_commit.message }}'
 
       - name: debug app
         run: flutter build apk --debug --split-per-abi
