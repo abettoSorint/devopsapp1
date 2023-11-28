@@ -69,7 +69,7 @@ jobs:
           if echo "${committags[@]}" | grep -qw "$commitGit"; then
             echo "Found $commitGit!"
           else
-            echo "$commitGit not found." >> $GITHUB_ENV
+            echo "$commitGit not found."
           fi
           
           echo "salut " $beforeVersion
