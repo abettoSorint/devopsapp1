@@ -56,9 +56,9 @@ jobs:
           #beforVersion v[0-9].[0-9].[0-9]
           Major=${vars.MAJOR}
           Minor=${vars.MINOR}
-          currentM=${vars.CURRENTM}
+          CurrentM=${vars.CURRENTM}
 
-          beforeVersion='v'${Major^^}'.'${Minor^^}'.'${currentM^^}
+          beforeVersion='v'${Major^^}'.'${Minor^^}'.'${CurrentM^^}
 
           #echo "Major=$Major" >> $GITHUB_ENV
           #echo "Minor=$Minor" >> $GITHUB_ENV

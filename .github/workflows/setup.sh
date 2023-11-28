@@ -7,12 +7,12 @@ myCommit=${ github.event.head_commit.message }
 echo $myCommit
 
 #parametter commit input
-commitGit=$myCommit
+commitGit=${myCommit%%/*}
 
 #beforVersion v[0-9].[0-9].[0-9]
-Major=1
-Minor=3
-currentM=2
+Major=${vars.MAJOR}
+Minor=${vars.MINOR}
+currentM=${vars.CURRENTM}
 
 beforeVersion='v'${Major^^}'.'${Minor^^}'.'${currentM^^}
 
