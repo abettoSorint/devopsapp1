@@ -75,7 +75,7 @@ jobs:
             if [ '${{  github.ref_name}}' = "Pro" ] || [ '${{  github.ref_name}}' = "Pre-Pro" ]; then
               echo "yes!"
             else
-              echo "ISPRO=true" >> $GITHUB_ENV
+              echo "ISPRO=true" >> "$GITHUB_ENV"
               echo " isPro :${{env.ISPRO}}"
               echo "no!"
             fi
