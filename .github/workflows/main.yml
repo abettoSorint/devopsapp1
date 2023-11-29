@@ -76,7 +76,7 @@ jobs:
               echo "yes!"
             else
               echo "ISPRO=true" >> "$GITHUB_ENV"
-              echo " isPro :${{env.ISPRO}}"
+              echo " isPro1 :${{env.ISPRO}}"
               echo "no!"
             fi
           else
