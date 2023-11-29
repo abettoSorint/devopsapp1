@@ -4,9 +4,10 @@ name: Android Release
 on:
   # 2
   push:
-    branches: [ "master" ]
+    branches: [ "master", "Pre-Pro" ,Pro]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "master", "Pre-Pro" ,Pro ]
+        
 
   # 3
   workflow_dispatch:
@@ -61,7 +62,7 @@ jobs:
           Minor=${{env.MINOR}}
           currentM=${{env.CURRENTM}}
           
-          beforeVersion='v'${Major^^}'.'${Minor^^}'.'${currentM^^}
+          
           
           #echo "Major=$Major" >> $GITHUB_ENV
           #echo "Minor=$Minor" >> $GITHUB_ENV
@@ -71,15 +72,17 @@ jobs:
           committags=(build/,ci/,feat/,fix/,chore/,refactor/,revert/,style/,minorRelease/,majorRelease/)
           if echo "${committags[@]}" | grep -qw "$commitGit"; then
             echo "Found $commitGit!"
-            if [ "$fname" = "a.txt" ] | [ "$fname" = "c.txt" ]; then
+            if [ '${{  github.ref_name}}' = "Pro" ] || [ '${{  github.ref_name}}' = "Pre-Pro" ]; then
               echo "yes!"
             else
+            #echo "true" >> ${{env.ISPRO}}
               echo "no!"
             fi
           else
             echo "$commitGit not found."
           fi
           
+          beforeVersion='v'${Major^^}'.'${Minor^^}'.'${currentM^^}
           echo "salut " $beforeVersion
           echo ${committags[*]}
 
