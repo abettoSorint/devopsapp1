@@ -67,6 +67,10 @@ jobs:
           #echo "Major=$Major" >> $GITHUB_ENV
           #echo "Minor=$Minor" >> $GITHUB_ENV
           #echo "currentM=$currentM" >> $GITHUB_ENV
+
+          echo "ISPRO1=true" >> "$GITHUB_ENV"
+          echo " isPro1 :${{vars.ISPRO1}}"
+          
           
           
           committags=(build/,ci/,feat/,fix/,chore/,refactor/,revert/,style/,minorRelease/,majorRelease/)
