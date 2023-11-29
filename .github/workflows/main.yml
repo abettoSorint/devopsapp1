@@ -41,7 +41,7 @@ jobs:
         run: flutter test
 
       - name: Flutter commit  
-        run: echo  '${{ github.workspace }} MAJOR :${{env.MAJOR}} MINOR:${{vars.MINOR}}'
+        run: echo  '${{ github.workspace }}'
 
       - name: Flutter commit  to setup file
         run: |
@@ -55,8 +55,8 @@ jobs:
           
           #beforVersion v[0-9].[0-9].[0-9]
           Major=${{env.MAJOR}}
-          Minor=${vars.MINOR}
-          currentM=${vars.CURRENTM}
+          Minor=${{env.MINOR}}
+          currentM=${{env.CURRENTM}}
           
           beforeVersion='v'${Major^^}'.'${Minor^^}'.'${currentM^^}
           
