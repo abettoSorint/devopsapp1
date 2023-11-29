@@ -43,6 +43,9 @@ jobs:
       - name: Flutter commit  
         run: echo  '${{ github.workspace }}'
 
+      - name: Flutter branch to action  
+        run: echo branch  '${{  github.ref_name}}'
+
       - name: Flutter commit  to setup file
         run: |
           echo 'mon test di commit bene'
@@ -68,6 +71,11 @@ jobs:
           committags=(build/,ci/,feat/,fix/,chore/,refactor/,revert/,style/,minorRelease/,majorRelease/)
           if echo "${committags[@]}" | grep -qw "$commitGit"; then
             echo "Found $commitGit!"
+            if [ "$fname" = "a.txt" ] | [ "$fname" = "c.txt" ]; then
+              echo "yes!"
+            else
+              echo "no!"
+            fi
           else
             echo "$commitGit not found."
           fi
