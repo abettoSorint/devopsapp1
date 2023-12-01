@@ -56,7 +56,7 @@ jobs:
           #take the commit
           myCommit='${{ github.event.head_commit.message }}'
           echo $myCommit
-          echo 'majour :$MAJOR and minor è :$MINOR'
+          echo 'majour :${{vars.MINOR}} and minor è :${{vars.ISPRE}}'
 
           #parametter commit input
           commitGit=${myCommit%%/*}
