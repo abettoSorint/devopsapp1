@@ -79,7 +79,8 @@ jobs:
               echo "yes!"
             else
             echo "action_state=${{vars.ISPRE}}" >> "$GITHUB_ENV"
-              echo " isPro1 :$action_state"
+              echo " isPro1 :${{env.action_state}}"
+              echo " isPro2 :${{vars.action_state}}"
               echo "no!"
             fi
           else
