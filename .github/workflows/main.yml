@@ -50,13 +50,12 @@ jobs:
       - name: Flutter commit  to setup file
         env:
           MAJOR: ${{vars.ISPRE}}
-          MINOR: ${{env.MINOR}}
+          MINOR: ${{vars.MINOR}}
         run: |
           echo 'mon test di commit bene'
           #take the commit
           myCommit='${{ github.event.head_commit.message }}'
           echo $myCommit
-          echo 'majour :${{vars.MINOR}} and minor è :${{vars.ISPRE}}'
 
           #parametter commit input
           commitGit=${myCommit%%/*}
@@ -70,11 +69,7 @@ jobs:
           
           #echo "Major=$Major" >> $GITHUB_ENV
           #echo "Minor=$Minor" >> $GITHUB_ENV
-          #echo "currentM=$currentM" >> $GITHUB_ENV
-
-          echo "ISPRO1=true : $GITHUB_ENV"
-          echo " isPro1 :${{vars.ISPRO1}}"
-          echo " isPro1 :${{env.MAJOR}}"
+          #echo "currentM=$currentM" >> $GITHUB_ENV       
           
           
           committags=(build/,ci/,feat/,fix/,chore/,refactor/,revert/,style/,minorRelease/,majorRelease/)
@@ -83,8 +78,8 @@ jobs:
             if [ '${{  github.ref_name}}' = "Pro" ] || [ '${{  github.ref_name}}' = "Pre-Pro" ]; then
               echo "yes!"
             else
-              echo "ISPRO1=true : $ISPRO1"
-              echo " isPro1 :${{vars.ISPRO1}}"
+            echo "action_state=${{vars.ISPRE}}" >> "$GITHUB_ENV"
+              echo " isPro1 :$action_state"
               echo "no!"
             fi
           else
