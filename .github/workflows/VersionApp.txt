@@ -1,4 +1,4 @@
-5:Minor
-6:Major
-7:CurrentModify
-90:LastComit
+0:Minor
+0:Major
+0:CurrentModify
+0:LastComit

@@ -17,6 +17,7 @@ env:
   LAST_MINOR: 2
   LAST_CURRENTM: 3
   LAST_COMMIT: 4
+  MY_RELEASE: false
 # 4
 jobs:
   test:
@@ -65,7 +66,7 @@ jobs:
           elif echo "$line" | grep -qw "CurrentModify"; then
             echo "LAST_CURRENTM=${line%%:*}" >> $GITHUB_ENV
           elif echo "$line" | grep -qw "LastComit"; then
-            echo "LAST_COMMIT=${line%%:*}" >> $GITHUB_ENV
+            echo "LAST_COMMIT=${{github.run_number}}" >> $GITHUB_ENV
           else
             echo "THIS FILE IS NOT UPDATING"
           fi
@@ -100,23 +101,34 @@ jobs:
           
           #committags=(minorRelease/,majorRelease/)
           if echo "minorRelease/" | grep -qw "$commitGit"; then
-            Minor=$((${{env.LAST_MINOR}}+1))
+            Minor=$((${{env.LAST_MINOR}}+1))            
+            currentM=0
             echo "Found $Minor!"
-          elif echo "majorRelease/" | grep -qw "Major"; then
+          elif echo "majorRelease/" | grep -qw "$commitGit"; then
             Major=$((${{env.LAST_MAJOR}}+1))
+            Minor=0
+            currentM=0
             echo "Found $Major!"
+          elif echo "release/" | grep -qw "$commitGit"; then
+            echo "MY_RELEASE=true" >> $GITHUB_ENV
           else
             currentM=$((${{env.LAST_CURRENTM}}+1))
             echo "$currentM not found."
           fi
           
           beforeVersion='v'${Major^^}'.'${Minor^^}'.'${currentM^^}
+          echo """Minor:$Minor
+          Major:$Major
+          CurrentModify:$currentM
+          LastComit:${{github.run_number}}""" > ${{github.workspace}}/.github/workflows/VersionApp.txt 
           echo "salut " $beforeVersion
           #echo ${committags[*]}
 
       - name: debug app
+        if: ${{ env.MY_RELEASE == 'true' }}
         run: flutter build apk --debug --split-per-abi
       - name: Push APK to Releases
+        if: ${{ env.MY_RELEASE == 'true' }}
         uses: ncipollo/release-action@v1
         with:
           artifacts: "build/app/outputs/apk/debug/*.apk"
