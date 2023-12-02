@@ -74,8 +74,9 @@ jobs:
 
       - name: Flutter commit  to setup file
         env:
-          MAJOR: ${{vars.ISPRE}}
-          MINOR: ${{vars.MINOR}}
+          MAJOR: 0
+          MINOR: 0
+          CURRENTM: 0
         run: |
           echo 'mon test di commit bene'
           #take the commit
@@ -97,24 +98,21 @@ jobs:
           #echo "currentM=$currentM" >> $GITHUB_ENV       
           
           
-          committags=(build/,ci/,feat/,fix/,chore/,refactor/,revert/,style/,minorRelease/,majorRelease/)
-          if echo "${committags[@]}" | grep -qw "$commitGit"; then
-            echo "Found $commitGit!"
-            if [ '${{  github.ref_name}}' = "Pro" ] || [ '${{  github.ref_name}}' = "Pre-Pro" ]; then
-              echo "yes!"
-            else
-              echo "action_state=${{vars.ISPRE}}" >> "$GITHUB_ENV"
-              echo " isPro1 :${{env.ACTION_STATE}}"
-              echo " isPro2 :${{vars.ACTION_STATE}}"
-              echo "no!"
-            fi
+          #committags=(minorRelease/,majorRelease/)
+          if echo "minorRelease/" | grep -qw "$commitGit"; then
+            Minor='$((${{env.LAST_MINOR}}+1))'
+            echo "Found $Minor!"
+          elif echo "majorRelease/" | grep -qw "Major"; then
+            Major='$((${{env.LAST_MAJOR}}+1))'
+            echo "Found $Major!"
           else
-            echo "$commitGit not found."
+            currentM='$((${{env.LAST_CURRENTM}}+1))'
+            echo "$currentM not found."
           fi
           
           beforeVersion='v'${Major^^}'.'${Minor^^}'.'${currentM^^}
           echo "salut " $beforeVersion
-          echo ${committags[*]}
+          #echo ${committags[*]}
 
       - name: debug app
         run: flutter build apk --debug --split-per-abi
