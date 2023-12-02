@@ -131,6 +131,7 @@ jobs:
         with:
           path: |
             ${{github.workspace}}/.github/workflows/
+          token: ${{ secrets.Token }}
 
       - name: debug app
         if: ${{ env.MY_RELEASE == 'true' }}
