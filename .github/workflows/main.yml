@@ -28,6 +28,8 @@ jobs:
     steps:
       # 8
       - uses: actions/checkout@v3
+        with: 
+          cache: true
       - uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
@@ -118,13 +120,12 @@ jobs:
           fi
           
           beforeVersion='V'${Major^^}'.'${Minor^^}'.'${currentM^^}
-          mkdir "${{github.workspace}}/.github/workflows/filetest.txt"
           echo '${Minor}:Minor
           ${Major}:Major
           ${currentM}:CurrentModify
           ${{github.run_number}}:LastComit' > $filename 
           echo "salut " $beforeVersion
-          #echo ${committags[*]}
+          #echo ${committags[*]}        
 
       - name: debug app
         if: ${{ env.MY_RELEASE == 'true' }}
