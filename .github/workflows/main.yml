@@ -9,6 +9,7 @@ on:
     branches: [ "master", "Pre-Pro" ,Pro ]
         
 
+
   # 3
   workflow_dispatch:
 
@@ -47,6 +48,32 @@ jobs:
       - name: Flutter branch to action  
         run: echo branch  '${{  github.ref_name}}'
 
+      - name: Inizialyze variable CI/CD
+        run: |
+          filename="VersionApp.txt"
+          n=1
+          while read line; do
+          echo "Line No. $n : $line"
+          if [ '${{  github.ref_name}}' = "Minor" ]
+          if echo "$line" | grep -qw "Minor"; then
+            echo "${line%%:*} : $LAST_MINOR"
+          elif echo "$line" | grep -qw "Major"; then
+            echo "${line%%:*} : $LAST_MAJOR"
+          elif echo "$line" | grep -qw "CurrentModify"; then
+            echo "${line%%:*} : $LAST_CURRENTM"
+          elif echo "$line" | grep -qw "LastComit"; then
+            echo "${line%%:*} : $LAST_COMMIT"
+          else
+            echo "THIS FILE IS NOT UPDATING"
+          fi
+          n=$((n+1))
+          done < $filename
+        env:
+          LAST_MAJOR: ${{ vars.LAST_MAJOR }}    
+          LAST_MINOR: ${{ vars.LAST_MINOR }}
+          LAST_CURRENTM: ${{ vars.LAST_CURRENTM }}
+          LAST_COMMIT: ${{ github.run_number }}
+
       - name: Flutter commit  to setup file
         env:
           MAJOR: ${{vars.ISPRE}}
@@ -65,7 +92,7 @@ jobs:
           Minor='${{env.MINOR}}'
           currentM='${{env.CURRENTM}}'
           
-          
+          echo "LAST_MAJOR :${{env.LAST_MAJOR}} ,LAST_MINOR :${{vars.LAST_MINOR}} ,LAST_COMMIT :${{env.LAST_COMMIT}}"
           
           #echo "Major=$Major" >> $GITHUB_ENV
           #echo "Minor=$Minor" >> $GITHUB_ENV
