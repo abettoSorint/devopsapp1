@@ -100,13 +100,13 @@ jobs:
           
           #committags=(minorRelease/,majorRelease/)
           if echo "minorRelease/" | grep -qw "$commitGit"; then
-            Minor='$((${{env.LAST_MINOR}}+1))'
+            Minor=$((${{env.LAST_MINOR}}+1))
             echo "Found $Minor!"
           elif echo "majorRelease/" | grep -qw "Major"; then
-            Major='$((${{env.LAST_MAJOR}}+1))'
+            Major=$((${{env.LAST_MAJOR}}+1))
             echo "Found $Major!"
           else
-            currentM='$((${{env.LAST_CURRENTM}}+1))'
+            currentM=$((${{env.LAST_CURRENTM}}+1))
             echo "$currentM not found."
           fi
           
