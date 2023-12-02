@@ -54,7 +54,6 @@ jobs:
           n=1
           while read line; do
           echo "Line No. $n : $line"
-          if [ '${{  github.ref_name}}' = "Minor" ]
           if echo "$line" | grep -qw "Minor"; then
             echo "${line%%:*} : $LAST_MINOR"
           elif echo "$line" | grep -qw "Major"; then
