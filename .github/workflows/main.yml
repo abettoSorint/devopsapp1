@@ -22,7 +22,7 @@ env:
 jobs:
   test:
     # 6
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     # 7
     steps:
@@ -139,7 +139,7 @@ jobs:
 
       - name: debug app IOS
         if: ${{ env.MY_RELEASE == 'true' }}
-        run: flutter build ios --debug --flavor internal
+        run: flutter build ios --debug --split-per-abi
       - name: Push IPA to Releases
         if: ${{ env.MY_RELEASE == 'true' }}
         uses: ncipollo/release-action@v1
