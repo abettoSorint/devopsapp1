@@ -116,7 +116,7 @@ jobs:
             echo "$currentM not found."
           fi
           
-          beforeVersion='v'${Major^^}'.'${Minor^^}'.'${currentM^^}
+          beforeVersion='V'${Major^^}'.'${Minor^^}'.'${currentM^^}
           echo """Minor:$Minor
           Major:$Major
           CurrentModify:$currentM
