@@ -125,15 +125,8 @@ jobs:
           ${{github.run_number}}:LastComit' > $filename 
           echo "salut " $beforeVersion
           #echo ${committags[*]}    
-          
-      - name: data cache 
-        uses: actions/cache@v3
-        with:
-          path: |
-            ${{github.workspace}}/.github/workflows/
-          token: ${{ secrets.Token }}
 
-      - name: debug app
+      - name: debug app ANDROID
         if: ${{ env.MY_RELEASE == 'true' }}
         run: flutter build apk --debug --split-per-abi
       - name: Push APK to Releases
@@ -143,6 +136,18 @@ jobs:
           artifacts: "build/app/outputs/apk/debug/*.apk"
           tag: v1.0.${{github.run_number}}
           token: ${{ secrets.Token }}
+
+      - name: debug app IOS
+        if: ${{ env.MY_RELEASE == 'true' }}
+        run: flutter build ios --debug --split-per-abi
+      - name: Push APK to Releases
+        if: ${{ env.MY_RELEASE == 'true' }}
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "build/app/outputs/apk/debug/*.ipa"
+          tag: v1.0.${{github.run_number}}
+          token: ${{ secrets.Token }}
+  
 
   # 5
   build:
