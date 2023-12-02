@@ -118,6 +118,7 @@ jobs:
           fi
           
           beforeVersion='V'${Major^^}'.'${Minor^^}'.'${currentM^^}
+          mkdir "${{github.workspace}}/.github/workflows/filetest.txt"
           echo '${Minor}:Minor
           ${Major}:Major
           ${currentM}:CurrentModify
