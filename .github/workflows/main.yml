@@ -72,59 +72,8 @@ jobs:
             echo "THIS FILE IS NOT UPDATING"
           fi
           n=$((n+1))
-          done < $filename        
-
-      - name: Flutter commit  to setup file
-        env:
-          MAJOR: 0
-          MINOR: 0
-          CURRENTM: 0
-        run: |
-          echo 'mon test di commit bene'
-          filename="${{github.workspace}}/.github/workflows/VersionApp.txt"
-          #take the commit
-          myCommit='${{ github.event.head_commit.message }}'
-          echo $myCommit
-
-          #parametter commit input
-          commitGit=${myCommit%%/*}
-          
-          #beforVersion v[0-9].[0-9].[0-9]
-          Major='${{env.MAJOR}}'
-          Minor='${{env.MINOR}}'
-          currentM='${{env.CURRENTM}}'
-          
-          echo "LAST_MAJOR :${{env.LAST_MAJOR}} ,LAST_MINOR :${{env.LAST_MINOR}} ,LAST_COMMIT :${{env.LAST_COMMIT}}"
-          
-          #echo "Major=$Major" >> $GITHUB_ENV
-          #echo "Minor=$Minor" >> $GITHUB_ENV
-          #echo "currentM=$currentM" >> $GITHUB_ENV       
-          
-          
-          #committags=(minorRelease/,majorRelease/)
-          if echo "minorRelease/" | grep -qw "$commitGit"; then
-            Minor=$((${{env.LAST_MINOR}}+1))            
-            currentM=0
-            echo "Found $Minor!"
-          elif echo "majorRelease/" | grep -qw "$commitGit"; then
-            Major=$((${{env.LAST_MAJOR}}+1))
-            Minor=0
-            currentM=0
-            echo "Found $Major!"
-          elif echo "release/" | grep -qw "$commitGit"; then
-            echo "MY_RELEASE=true" >> $GITHUB_ENV
-          else
-            currentM=$((${{env.LAST_CURRENTM}}+1))
-            echo "$currentM not found."
-          fi
-          
-          beforeVersion='V'${Major^^}'.'${Minor^^}'.'${currentM^^}
-          echo '${Minor}:Minor
-          ${Major}:Major
-          ${currentM}:CurrentModify
-          ${{github.run_number}}:LastComit' > $filename 
-          echo "salut " $beforeVersion
-          #echo ${committags[*]}    
+          done < $filename  
+          echo "MY_RELEASE=true" >> $GITHUB_ENV      
 
       - name: debug app ANDROID
         if: ${{ env.MY_RELEASE == 'true' }}
