@@ -80,6 +80,7 @@ jobs:
           CURRENTM: 0
         run: |
           echo 'mon test di commit bene'
+          filename="${{github.workspace}}/.github/workflows/VersionApp.txt"
           #take the commit
           myCommit='${{ github.event.head_commit.message }}'
           echo $myCommit
@@ -117,10 +118,10 @@ jobs:
           fi
           
           beforeVersion='V'${Major^^}'.'${Minor^^}'.'${currentM^^}
-          echo """Minor:${Minor}
-          Major:${Major}
-          CurrentModify:${currentM}
-          LastComit:${{github.run_number}}""" > "${{github.workspace}}/.github/workflows/VersionApp.txt" 
+          echo '${Minor}:Minor
+          ${Major}:Major
+          ${currentM}:CurrentModify
+          ${{github.run_number}}:LastComit' > $filename 
           echo "salut " $beforeVersion
           #echo ${committags[*]}
 
