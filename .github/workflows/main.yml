@@ -134,18 +134,18 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: "build/app/outputs/apk/debug/*.apk"
-          tag: v1.0.${{github.run_number}}
+          tag: v0.0.${{github.run_number}}
           token: ${{ secrets.Token }}
 
       - name: debug app IOS
         if: ${{ env.MY_RELEASE == 'true' }}
-        run: flutter build ios --debug --split-per-abi
-      - name: Push APK to Releases
+        run: flutter build ios --debug --flavor internal
+      - name: Push IPA to Releases
         if: ${{ env.MY_RELEASE == 'true' }}
         uses: ncipollo/release-action@v1
         with:
           artifacts: "build/app/outputs/apk/debug/*.ipa"
-          tag: v1.0.${{github.run_number}}
+          tag: v0.0.${{github.run_number}}
           token: ${{ secrets.Token }}
   
 
