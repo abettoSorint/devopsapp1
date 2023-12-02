@@ -117,10 +117,10 @@ jobs:
           fi
           
           beforeVersion='V'${Major^^}'.'${Minor^^}'.'${currentM^^}
-          echo """Minor:$Minor
-          Major:$Major
-          CurrentModify:$currentM
-          LastComit:${{github.run_number}}""" > ${{github.workspace}}/.github/workflows/VersionApp.txt 
+          echo """Minor:${Minor}
+          Major:${Major}
+          CurrentModify:${currentM}
+          LastComit:${{github.run_number}}""" > "${{github.workspace}}/.github/workflows/VersionApp.txt" 
           echo "salut " $beforeVersion
           #echo ${committags[*]}
 
