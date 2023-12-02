@@ -28,8 +28,7 @@ jobs:
     steps:
       # 8
       - uses: actions/checkout@v3
-        with: 
-          cache: true
+
       - uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
@@ -125,7 +124,13 @@ jobs:
           ${currentM}:CurrentModify
           ${{github.run_number}}:LastComit' > $filename 
           echo "salut " $beforeVersion
-          #echo ${committags[*]}        
+          #echo ${committags[*]}    
+          
+      - name: data cache 
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{github.workspace}}/.github/workflows/
 
       - name: debug app
         if: ${{ env.MY_RELEASE == 'true' }}
