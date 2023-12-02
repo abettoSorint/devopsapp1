@@ -90,7 +90,7 @@ jobs:
           Minor='${{env.MINOR}}'
           currentM='${{env.CURRENTM}}'
           
-          echo "LAST_MAJOR :${{env.LAST_MAJOR}} ,LAST_MINOR :${{vars.LAST_MINOR}} ,LAST_COMMIT :${{vars.LAST_COMMIT}}"
+          echo "LAST_MAJOR :${{env.LAST_MAJOR}} ,LAST_MINOR :${{env.LAST_MINOR}} ,LAST_COMMIT :${{env.LAST_COMMIT}}"
           
           #echo "Major=$Major" >> $GITHUB_ENV
           #echo "Minor=$Minor" >> $GITHUB_ENV
