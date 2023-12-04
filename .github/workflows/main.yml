@@ -4,32 +4,45 @@ name: Android Release
 on:
   # 2
   push:
-    branches: [ "master" ]
+    branches: [ "master", "Pre-Pro" ,Pro]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "master", "Pre-Pro" ,Pro ]
+        
+
 
   # 3
   workflow_dispatch:
+env:
+  LAST_MAJOR: 1    
+  LAST_MINOR: 2
+  LAST_CURRENTM: 3
+  LAST_COMMIT: 4
+  MY_RELEASE: false
+
+
 
 # 4
 jobs:
   test:
     # 6
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     # 7
     steps:
       # 8
       - uses: actions/checkout@v3
+
       - uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
           java-version: '17'
+          cache: 'gradle'
 
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.13.3'
           channel: 'stable'
+          cache: true
       - run: flutter --version
 
       - name: Run Flutter Analyse
@@ -38,14 +51,55 @@ jobs:
       - name: Run test app
         run: flutter test
 
-      - name: debug app
+      - name: Flutter commit  
+        run: echo  '${{ github.workspace }}'
+
+      - name: Flutter branch to action  
+        run: echo branch  '${{  github.ref_name}}'
+
+      - name: Inizialyze variable CI/CD
+        run: |
+          filename="${{github.workspace}}/.github/workflows/VersionApp.txt"
+          n=1
+          while read line; do
+          echo "Line No. $n : $line"
+          if echo "$line" | grep -qw "Minor"; then
+            echo "LAST_MINOR=${line%%:*}" >> $GITHUB_ENV
+          elif echo "$line" | grep -qw "Major"; then
+            echo "LAST_MAJOR=${line%%:*}" >> $GITHUB_ENV
+          elif echo "$line" | grep -qw "CurrentModify"; then
+            echo "LAST_CURRENTM=${line%%:*}" >> $GITHUB_ENV
+          elif echo "$line" | grep -qw "LastComit"; then
+            echo "LAST_COMMIT=${{github.run_number}}" >> $GITHUB_ENV
+          else
+            echo "THIS FILE IS NOT UPDATING"
+          fi
+          n=$((n+1))
+          done < $filename  
+          echo "MY_RELEASE=true" >> $GITHUB_ENV      
+
+      - name: debug app ANDROID
+        if: ${{ env.MY_RELEASE == 'true' }}
         run: flutter build apk --debug --split-per-abi
       - name: Push APK to Releases
+        if: ${{ env.MY_RELEASE == 'true' }}
         uses: ncipollo/release-action@v1
         with:
           artifacts: "build/app/outputs/apk/debug/*.apk"
-          tag: v1.0.5
+          tag: v0.0.${{github.run_number}}
           token: ${{ secrets.Token }}
+
+      - name: debug app IOS
+        if: ${{ env.MY_RELEASE == 'true' }}
+        run: flutter build ios --debug --split-per-abi
+      - name: Push IPA to Releases
+        if: ${{ env.MY_RELEASE == 'true' }}
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "build/app/outputs/apk/debug/*.ipa"
+          tag: v0.0.${{github.run_number}}
+          token: ${{ secrets.Token }}
+  
 
   # 5
   build:
@@ -59,3 +113,30 @@ jobs:
 
       - name: Run a one-line script
         run: echo "salut Arthur!"
+
+  # 1
+  version:
+    name: Create version number
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - uses: actions/checkout@v3
+      # 2
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0
+        with:
+          versionSpec: "5.x"
+
+      - name: Use GitVersion
+        id: gitversion
+        uses: gittools/actions/gitversion/execute@v0
+      # 3
+      - name: Create version.txt with nuGetVersion
+        run: echo ${{ steps.gitversion.outputs.nuGetVersion  }} > version.txt
+      # 4
+      - name: Upload version.txt
+        uses: actions/upload-artifact@v2
+        with:
+          name: gitversion
+          path: version.txt
